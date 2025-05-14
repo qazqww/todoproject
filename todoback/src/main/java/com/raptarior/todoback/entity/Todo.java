@@ -23,14 +23,14 @@ public class Todo {
 
     private int priority;
 
-    private LocalDateTime createdDate;
+    private LocalDateTime createdTime;
 
-    private LocalDateTime doneDate;
+    private LocalDateTime doneTime;
 
     private boolean isDone;
 
     @PrePersist
     protected void onCreate() {
-        this.createdDate = LocalDateTime.now();
+        this.createdTime = LocalDateTime.now();
     }
 }
