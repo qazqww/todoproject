@@ -9,6 +9,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class TodoService {
@@ -27,6 +29,18 @@ public class TodoService {
                 .build();
         Todo result = todoRepository.save(todo);
 
-        return modelMapper.map(todo, TodoResponse.class);
+        return modelMapper.map(result, TodoResponse.class);
+    }
+
+    public TodoResponse findTodo(Long id) {
+        Todo result = todoRepository.findById(id).orElseThrow();
+        return modelMapper.map(result, TodoResponse.class);
+    }
+
+    public List<TodoResponse> findAllTodo() {
+        List<Todo> result = todoRepository.findAll();
+        return result.stream()
+                .map(source -> modelMapper.map(source, TodoResponse.class))
+                .toList();
     }
 }

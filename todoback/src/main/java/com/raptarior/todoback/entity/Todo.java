@@ -1,18 +1,17 @@
 package com.raptarior.todoback.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table(name = "todo")
 public class Todo {
 
     @Id

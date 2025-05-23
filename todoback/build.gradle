@@ -19,13 +19,9 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
     compileOnly("org.projectlombok:lombok:1.18.38")
     annotationProcessor("org.projectlombok:lombok:1.18.38")
@@ -37,8 +33,6 @@ dependencies {
     implementation("org.modelmapper:modelmapper:3.2.3")
     runtimeOnly 'com.h2database:h2'
 
-    // https://mvnrepository.com/artifact/org.assertj/assertj-core
-    testImplementation("org.assertj:assertj-core:3.27.3")
 }
 
 tasks.named('test') {
