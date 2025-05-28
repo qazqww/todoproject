@@ -1,5 +1,6 @@
 package com.raptarior.todoback.service;
 
+import com.raptarior.todoback.dto.TodoRequest;
 import com.raptarior.todoback.dto.TodoResponse;
 import com.raptarior.todoback.entity.Todo;
 import com.raptarior.todoback.repository.TodoRepository;
@@ -46,5 +47,28 @@ public class TodoServiceTest {
         assertThat(result)
                 .usingRecursiveComparison()
                 .isEqualTo(target);
+    }
+
+    @Test
+    void createAndUpdate() {
+        // given
+        Todo todo = Todo.builder()
+                .content("할 일")
+                .priority(2)
+                .isDone(false)
+                .build();
+
+        // when
+        TodoRequest origin = modelMapper.map(todo, TodoRequest.class);
+        todoService.createTodo(origin);
+
+        TodoRequest request = new TodoRequest(1, "수정된 할 일", 3,
+                null, null, true);
+        todoService.updateTodo(1L, request);
+        TodoResponse response = todoService.findTodo(1L);
+
+        // then
+        System.out.println(response);
+        assertThat(response.getPriority()).isEqualTo(3);
     }
 }

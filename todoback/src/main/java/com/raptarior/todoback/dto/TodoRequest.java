@@ -1,13 +1,26 @@
 package com.raptarior.todoback.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+@Data
 @Builder
-public record TodoRequest(long no,
-                          String content,
-                          int priority,
-                          LocalDateTime createdTime,
-                          LocalDateTime doneTime,
-                          boolean isDone) {}
+@NoArgsConstructor
+@AllArgsConstructor
+public class TodoRequest {
+    private long no;
+
+    private String content;
+
+    private int priority;
+
+    private LocalDateTime createdTime;
+
+    private LocalDateTime doneTime;
+
+    private boolean isDone;
+}
