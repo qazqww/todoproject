@@ -61,4 +61,8 @@ public class TodoService {
 
         return modelMapper.map(todo, TodoResponse.class);
     }
+
+    public void deleteTodo(Long todoId) {
+        todoRepository.deleteById(todoId);
+    }
 }

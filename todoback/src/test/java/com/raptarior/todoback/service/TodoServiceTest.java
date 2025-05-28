@@ -11,7 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.NoSuchElementException;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @ActiveProfiles("test")
 @SpringBootTest
@@ -58,10 +61,10 @@ public class TodoServiceTest {
                 .isDone(false)
                 .build();
 
-        // when
         TodoRequest origin = modelMapper.map(todo, TodoRequest.class);
         todoService.createTodo(origin);
 
+        // when
         TodoRequest request = new TodoRequest(1, "수정된 할 일", 3,
                 null, null, true);
         todoService.updateTodo(1L, request);
@@ -70,5 +73,25 @@ public class TodoServiceTest {
         // then
         System.out.println(response);
         assertThat(response.getPriority()).isEqualTo(3);
+    }
+
+    @Test
+    void createAndDelete() {
+        // given
+        Todo todo = Todo.builder()
+                .content("할 일")
+                .priority(2)
+                .isDone(false)
+                .build();
+
+        TodoRequest request = modelMapper.map(todo, TodoRequest.class);
+        TodoResponse response = todoService.createTodo(request);
+
+        // when
+        todoService.deleteTodo(response.getNo());
+
+        // then
+        assertThatThrownBy(() -> todoService.findTodo(response.getNo()))
+                .isInstanceOf(NoSuchElementException.class);
     }
 }
