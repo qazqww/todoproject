@@ -1,10 +1,10 @@
 import './App.css';
-import Home from './pages/Home.jsx';
+import TodoPage from './pages/TodoPage';
 
 function App() {
   return (
     <div className='App'>
-      <Home />
+      <TodoPage />
     </div>
   );
 }

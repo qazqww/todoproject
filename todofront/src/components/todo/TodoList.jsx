@@ -1,17 +1,16 @@
 import React from 'react';
 import TodoItem from './TodoItem';
 
-const TodoList = ({ todos, onToggle, onDelete }) => {
+const TodoList = ({ todos, onDelete }) => {
+  const handleToggle = () => {};
+
   return (
-    <div className='todo-list'>
-      {todos.map((todo) => (
-        <TodoItem
-          key={todo.id}
-          todo={todo}
-          onToggle={onToggle}
-          onDelete={onDelete}
-        />
-      ))}
+    <div>
+      <ul className='todo-list'>
+        {todos.map((todo) => {
+          return <TodoItem key={todo.no} todo={todo} onToggle={handleToggle} />;
+        })}
+      </ul>
     </div>
   );
 };
