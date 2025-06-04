@@ -1,5 +1,6 @@
 package com.raptarior.todoback.service;
 
+import com.raptarior.todoback.common.ColorType;
 import com.raptarior.todoback.dto.TodoRequest;
 import com.raptarior.todoback.dto.TodoResponse;
 import com.raptarior.todoback.entity.Todo;
@@ -62,17 +63,17 @@ public class TodoServiceTest {
                 .build();
 
         TodoRequest origin = modelMapper.map(todo, TodoRequest.class);
-        todoService.createTodo(origin);
+        TodoResponse result = todoService.createTodo(origin);
 
         // when
-        TodoRequest request = new TodoRequest(1, "수정된 할 일", 3,
-                null, null, true);
-        todoService.updateTodo(1L, request);
-        TodoResponse response = todoService.findTodo(1L);
+        TodoRequest request = new TodoRequest(null, "수정된 할 일", 3,
+                null, null, true, ColorType.BLUE, "세부 내용", null);
+        todoService.updateTodo(result.getNo(), request);
+        TodoResponse response = todoService.findTodo(result.getNo());
 
         // then
-        System.out.println(response);
         assertThat(response.getPriority()).isEqualTo(3);
+        assertThat(response.getContent()).isEqualTo("수정된 할 일");
     }
 
     @Test

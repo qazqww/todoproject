@@ -1,5 +1,6 @@
 package com.raptarior.todoback.dto;
 
+import com.raptarior.todoback.common.ColorType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TodoResponse {
-    private long no;
+    private Long no;
 
     private String content;
 
@@ -23,4 +24,10 @@ public class TodoResponse {
     private LocalDateTime doneTime;
 
     private boolean isDone;
+
+    private ColorType colorType;
+
+    private String detail;
+
+    private LocalDateTime ddayTime;
 }
