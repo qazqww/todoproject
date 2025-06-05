@@ -4,10 +4,15 @@ import AddTodoForm from '../components/todo/AddTodoForm';
 
 const TodoPage = () => {
   const [todos, setTodos] = useState([]);
+  const [isAddActive, setAddActive] = useState(false);
 
-  const handleAdd = () => {};
+  const handleAdd = (todo) => {
+    setTodos([...todos, todo]);
+  };
 
-  const handleDelete = () => {};
+  const handleDelete = (todo) => {
+    setTodos(todos.filter((e) => e.no !== todo.no));
+  };
 
   useEffect(() => {
     setTodos([
@@ -33,13 +38,18 @@ const TodoPage = () => {
         detail: '동료의 코드를 리뷰하고 피드백 제공',
       },
     ]);
-  });
+  }, []);
 
   return (
     <div className='todo-page'>
       <h1>할 일 목록</h1>
       <TodoList todos={todos} onDelete={handleDelete} />
-      <AddTodoForm onAdd={handleAdd} />
+      {isAddActive && (
+        <AddTodoForm onAdd={handleAdd} setActive={setAddActive} />
+      )}
+      <button className='add-todo-btn' onClick={() => setAddActive(true)}>
+        추가
+      </button>
     </div>
   );
 };
