@@ -41,8 +41,8 @@ const TodoPage = () => {
   }, []);
 
   return (
-    <div className='todo-page'>
-      <h1>할 일 목록</h1>
+    <div className='w-full m-auto bg-gray-200 p-6 rounded shadow-lg'>
+      <h1 className='text-2xl font-bold mb-6'>할 일 목록</h1>
       <TodoList todos={todos} onDelete={handleDelete} />
       {isAddActive && (
         <AddTodoForm onAdd={handleAdd} setActive={setAddActive} />
