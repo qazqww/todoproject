@@ -13,6 +13,7 @@ const TodoList = ({ todos, onDelete }) => {
             <th className='w-1/8'>우선순위</th>
             <th className='w-1/8'>D-Day</th>
             <th className='w-1/8'>완료 여부</th>
+            <th className='w-1/8'>설정</th>
           </tr>
         </thead>
         <tbody>
