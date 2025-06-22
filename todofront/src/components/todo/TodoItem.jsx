@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { CiCircleMore } from 'react-icons/ci';
 import TodoDetail from './TodoDetail';
+import TodoDropdown from './TodoDropdown';
 
-const TodoItem = ({ todo, onToggle }) => {
+const TodoItem = ({ todo, onEdit, onDelete, onEditOpen }) => {
   const [clicked, setClicked] = useState(false);
   const [checked, setChecked] = useState(todo.done);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -41,12 +42,12 @@ const TodoItem = ({ todo, onToggle }) => {
             <CiCircleMore />
           </button>
           {menuOpen && (
-            <div className='absolute right-0 mt-2 w-32 bg-white border rounded shadow-lg z-10'>
-              <button className='w-full text-left px-4 py-2'>수정</button>
-              <button className='w-full text-left px-4 py-2 text-red-500'>
-                삭제
-              </button>
-            </div>
+            <TodoDropdown
+              todo={todo}
+              onDelete={onDelete}
+              onEditOpen={onEditOpen}
+              setMenuOpen={setMenuOpen}
+            />
           )}
         </td>
       </tr>

@@ -1,13 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import TodoList from '../components/todo/TodoList';
 import AddTodoForm from '../components/todo/AddTodoForm';
+import TodoModal from '../components/todo/TodoModal';
 
 const TodoPage = () => {
   const [todos, setTodos] = useState([]);
   const [isAddActive, setAddActive] = useState(false);
+  const [isModalOpen, setModalOpen] = useState(false);
 
   const handleAdd = (todo) => {
     setTodos([...todos, todo]);
+  };
+
+  const handleEdit = (todo) => {
+    setTodos(todos.map((e) => (e.no === todo.no ? { ...e, ...todo } : e)));
+  };
+
+  const handleEditOpen = () => {
+    setModalOpen(true);
   };
 
   const handleDelete = (todo) => {
@@ -43,13 +53,27 @@ const TodoPage = () => {
   return (
     <div className='w-screen h-screen m-auto bg-gray-200 p-6 rounded shadow-lg'>
       <h1 className='text-2xl font-bold mb-6'>할 일 목록</h1>
-      <TodoList todos={todos} onDelete={handleDelete} />
+      <TodoList
+        todos={todos}
+        onEdit={handleEdit}
+        onEditOpen={handleEditOpen}
+        onDelete={handleDelete}
+      />
       {isAddActive && (
         <AddTodoForm onAdd={handleAdd} setActive={setAddActive} />
       )}
-      <button className='add-todo-btn' onClick={() => setAddActive(true)}>
+      <button className='btn' onClick={() => setAddActive(true)}>
         추가
       </button>
+      {isModalOpen && (
+        <TodoModal
+          onClose={() => {
+            setModalOpen(false);
+          }}
+        >
+          <h2>모달 내용</h2>
+        </TodoModal>
+      )}
     </div>
   );
 };

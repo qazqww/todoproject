@@ -1,9 +1,7 @@
 import React from 'react';
 import TodoItem from './TodoItem';
 
-const TodoList = ({ todos, onDelete }) => {
-  const handleToggle = () => {};
-
+const TodoList = ({ todos, onEdit, onDelete, onEditOpen }) => {
   return (
     <div>
       <table className='w-full mb-4 text-center text-sm'>
@@ -19,7 +17,13 @@ const TodoList = ({ todos, onDelete }) => {
         <tbody>
           {todos.map((todo) => {
             return (
-              <TodoItem key={todo.no} todo={todo} onToggle={handleToggle} />
+              <TodoItem
+                key={todo.no}
+                todo={todo}
+                onEdit={onEdit}
+                onDelete={onDelete}
+                onEditOpen={onEditOpen}
+              />
             );
           })}
         </tbody>
