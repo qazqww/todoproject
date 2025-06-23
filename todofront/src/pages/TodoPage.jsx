@@ -52,7 +52,7 @@ const TodoPage = () => {
 
   return (
     <div className='w-screen h-screen m-auto bg-gray-200 p-6 rounded shadow-lg'>
-      <h1 className='text-2xl font-bold mb-6'>할 일 목록</h1>
+      <h1 className='text-2xl font-bold mb-6'>목록</h1>
       <TodoList
         todos={todos}
         onEdit={handleEdit}

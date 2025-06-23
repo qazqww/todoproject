@@ -10,39 +10,40 @@ const TodoModal = ({ onClose }) => {
         className='bg-white p-6 rounded-xl shadow-lg min-w-[300px] max-w-md'
         onClick={(e) => e.stopPropagation()}
       >
-        {/* 할 일 */}
-        <div>
-          <label className='label block'>할 일</label>
+        {/* 내용 */}
+        <div className='flex my-5'>
+          <label className='label block'>내용</label>
           <input
             type='text'
-            className='w-full border-b border-blue-500 focus:outline-none'
+            className='w-5/6 border-b border-blue-500 focus:outline-none'
           />
         </div>
         {/* 설명 */}
-        <div>
+        <div className='flex my-5'>
           <label className='block label'>설명</label>
-          <textarea className='w-full h-20 rounded-xl bg-gray-300 p-2 resize-none focus:outline-none' />
+          <textarea className='w-5/6 h-20 rounded-xl bg-gray-300 p-2 resize-none focus:outline-none' />
         </div>
         {/* 기한 */}
-        <div className='flex items-center space-x-2'>
+        <div className='flex my-5 items-center space-x-2'>
           <label className='label'>기한</label>
-          <input type='datetime-local' className='border px-1 text-sm' />
+          <input type='date' className='border px-1 text-sm' />
+          <input type='time' className='border px-1 text-sm' />
           <label className='flex items-center space-x-1'>
             <input type='checkbox' />
             <span className='text-sm'>시간 제외</span>
           </label>
         </div>
         {/* 우선순위 */}
-        <div>
+        <div className='flex my-5 items-center'>
           <label className='label block mb-1'>우선 순위</label>
           <div className='flex space-x-2'>
             {[1, 2, 3, 4, 5].map((num) => (
-              <button className={`w-8 h-8 rounded-full`}>{num}</button>
+              <button className={`text-sm rounded-full`}>{num}</button>
             ))}
           </div>
         </div>
         {/* 완료 여부 */}
-        <div className='flex items-center space-x-3'>
+        <div className='flex my-5 items-center space-x-3'>
           <label className='label'>완료 여부</label>
           <label className='relative inline-flex items-center cursor-pointer'>
             <input type='checkbox' className='sr-only peer' />
@@ -50,17 +51,17 @@ const TodoModal = ({ onClose }) => {
             <div className='absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full peer-checked:translate-x-5 transition-transform'></div>
           </label>
         </div>
-        {/* 색 분류 */}
-        <div>
-          <label className='label block mb-1'>색 분류</label>
-          <select className='w-full bg-gray-300 rounded-full px-4 py-1'>
-            <option value='red'>🔴 빨강</option>
-            <option value='blue'>🔵 파랑</option>
-            <option value='green'>🟢 초록</option>
-            <option value='yellow'>🟡 노랑</option>
+        {/* 분류 */}
+        <div className='flex my-5'>
+          <label className='label block mb-1'>분류</label>
+          <select className='w-15 bg-gray-300 rounded-full px-4 py-1'>
+            <option value='red'>🔴</option>
+            <option value='blue'>🔵</option>
+            <option value='green'>🟢</option>
+            <option value='yellow'>🟡</option>
           </select>
         </div>
-        <div>
+        <div className='flex justify-end space-x-2'>
           <button className='btn mt-4 text-sm' onClick={onClose}>
             닫기
           </button>
