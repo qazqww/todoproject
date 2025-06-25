@@ -32,6 +32,7 @@ const TodoPage = () => {
         priority: 3,
         done: false,
         detail: '리액트의 기초부터 심화까지 학습',
+        colorType: 'blue',
       },
       {
         no: 2,
@@ -39,6 +40,7 @@ const TodoPage = () => {
         priority: 2,
         done: false,
         detail: '리액트를 활용한 간단한 프로젝트 개발',
+        colorType: 'violet',
       },
       {
         no: 3,
@@ -46,6 +48,7 @@ const TodoPage = () => {
         priority: 1,
         done: true,
         detail: '동료의 코드를 리뷰하고 피드백 제공',
+        colorType: 'red',
       },
     ]);
   }, []);

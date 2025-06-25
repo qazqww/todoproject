@@ -7,7 +7,8 @@ const TodoList = ({ todos, onEdit, onDelete, onEditOpen }) => {
       <table className='w-full mb-4 text-center text-sm'>
         <thead className='border-b border-black font-semibold'>
           <tr>
-            <th className='w-1/2'>할 일</th>
+            <th className='w-1/32'> </th>
+            <th className='w-1/3'>할 일</th>
             <th className='w-1/8'>우선순위</th>
             <th className='w-1/8'>D-Day</th>
             <th className='w-1/8'>완료 여부</th>

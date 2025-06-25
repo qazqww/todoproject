@@ -3,6 +3,8 @@ import { MdExpandMore, MdExpandLess } from 'react-icons/md';
 
 const TodoModal = ({ onClose }) => {
   const [isDetailOpen, setDetailOpen] = useState(false);
+  const [isTimeActive, setTimeActive] = useState(true);
+  const [priority, setPriority] = useState(3);
 
   return (
     <div
@@ -29,12 +31,20 @@ const TodoModal = ({ onClose }) => {
         {isDetailOpen && (
           <>
             {/* 기한 */}
-            <div className='flex my-5 items-center space-x-2'>
-              <label className='label'>기한</label>
-              <input type='date' className='border px-1 text-sm' />
-              <input type='time' className='border px-1 text-sm' />
+            <div className='flex justify-between my-5 items-center space-x-2'>
+              <div className='flex'>
+                <label className='label'>기한</label>
+                <input type='date' className='border px-1 text-sm' />
+              </div>
+              {isTimeActive && (
+                <input type='time' className='border px-1 text-sm' />
+              )}
               <label className='flex items-center space-x-1'>
-                <input type='checkbox' />
+                <input
+                  type='checkbox'
+                  value={isTimeActive}
+                  onClick={() => setTimeActive(!isTimeActive)}
+                />
                 <span className='text-sm'>시간 제외</span>
               </label>
             </div>
@@ -43,12 +53,19 @@ const TodoModal = ({ onClose }) => {
               <label className='label block mb-1'>우선 순위</label>
               <div className='flex space-x-2'>
                 {[1, 2, 3, 4, 5].map((num) => (
-                  <button className={`text-sm rounded-full`}>{num}</button>
+                  <button
+                    key={num}
+                    onClick={() => setPriority(num)}
+                    className={`rounded-full
+            ${priority === num ? 'bg-blue-500 text-white' : 'bg-gray-300 text-black'}`}
+                  >
+                    {num}
+                  </button>
                 ))}
               </div>
             </div>
             {/* 완료 여부 */}
-            <div className='flex my-5 items-center space-x-3'>
+            <div className='flex my-5 items-center'>
               <label className='label'>완료 여부</label>
               <label className='relative inline-flex items-center cursor-pointer'>
                 <input type='checkbox' className='sr-only peer' />
@@ -61,9 +78,11 @@ const TodoModal = ({ onClose }) => {
               <label className='label block mb-1'>분류</label>
               <select className='w-15 bg-gray-300 rounded-full px-4 py-1'>
                 <option value='red'>🔴</option>
-                <option value='blue'>🔵</option>
-                <option value='green'>🟢</option>
+                <option value='orange'>🟠</option>
                 <option value='yellow'>🟡</option>
+                <option value='green'>🟢</option>
+                <option value='blue'>🔵</option>
+                <option value='violet'>🟣</option>
               </select>
             </div>
           </>

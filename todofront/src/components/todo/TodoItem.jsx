@@ -25,6 +25,7 @@ const TodoItem = ({ todo, onEdit, onDelete, onEditOpen }) => {
   return (
     <>
       <tr className='todo-item'>
+        <td className={`colortype bg-${todo.colorType}-500`}></td>
         <td className='content' onClick={() => setClicked(!clicked)}>
           {todo.content}
         </td>
