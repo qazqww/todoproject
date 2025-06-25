@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import * as todoApi from '../api/todoApi';
 import TodoList from '../components/todo/TodoList';
 import AddTodoForm from '../components/todo/AddTodoForm';
 import TodoModal from '../components/todo/TodoModal';
@@ -8,8 +9,13 @@ const TodoPage = () => {
   const [isAddActive, setAddActive] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
 
-  const handleAdd = (todo) => {
-    setTodos([...todos, todo]);
+  const handleAdd = async (todo) => {
+    try {
+      const res = await todoApi.createTodo(todo);
+      setTodos([...todos, res.data]);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleEdit = (todo) => {
@@ -25,32 +31,9 @@ const TodoPage = () => {
   };
 
   useEffect(() => {
-    setTodos([
-      {
-        no: 1,
-        content: '리액트 공부하기',
-        priority: 3,
-        done: false,
-        detail: '리액트의 기초부터 심화까지 학습',
-        colorType: 'blue',
-      },
-      {
-        no: 2,
-        content: '프로젝트 만들기',
-        priority: 2,
-        done: false,
-        detail: '리액트를 활용한 간단한 프로젝트 개발',
-        colorType: 'violet',
-      },
-      {
-        no: 3,
-        content: '코드 리뷰하기',
-        priority: 1,
-        done: true,
-        detail: '동료의 코드를 리뷰하고 피드백 제공',
-        colorType: 'red',
-      },
-    ]);
+    todoApi.findAllTodo().then((res) => {
+      setTodos(res.data);
+    });
   }, []);
 
   return (
