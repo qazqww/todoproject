@@ -6,7 +6,7 @@ const TodoDropdown = ({ todo, onDelete, setMenuOpen, onEditOpen }) => {
       <button
         className='w-full text-left px-4 py-2'
         onClick={() => {
-          onEditOpen();
+          onEditOpen(todo.no);
           setMenuOpen(false);
         }}
       >

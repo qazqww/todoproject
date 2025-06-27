@@ -4,8 +4,8 @@ import TodoDetail from './TodoDetail';
 import TodoDropdown from './TodoDropdown';
 
 const TodoItem = ({ todo, onEdit, onDelete, onEditOpen }) => {
-  const [clicked, setClicked] = useState(false);
-  const [checked, setChecked] = useState(todo.done);
+  const [isClicked, setClicked] = useState(false);
+  const [isChecked, setChecked] = useState(todo.done);
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef(null);
 
@@ -26,7 +26,13 @@ const TodoItem = ({ todo, onEdit, onDelete, onEditOpen }) => {
     <>
       <tr className='todo-item'>
         <td className={`colortype bg-${todo.colorType}-500`}></td>
-        <td className='content' onClick={() => setClicked(!clicked)}>
+        <td
+          className='content'
+          onClick={() => {
+            setClicked(!isClicked);
+            console.log(isClicked);
+          }}
+        >
           {todo.content}
         </td>
         <td className='priority'>{todo.priority}</td>
@@ -34,8 +40,9 @@ const TodoItem = ({ todo, onEdit, onDelete, onEditOpen }) => {
         <td className='isdone'>
           <input
             type='checkbox'
-            checked={checked}
-            onClick={() => setChecked(!checked)}
+            checked={isChecked}
+            onClick={() => setChecked(!isChecked)}
+            onChange={() => {}}
           ></input>
         </td>
         <td className='more' ref={menuRef}>
@@ -53,7 +60,7 @@ const TodoItem = ({ todo, onEdit, onDelete, onEditOpen }) => {
         </td>
       </tr>
       <tr>
-        <td colSpan='4'>{clicked && <TodoDetail todo={todo} />}</td>
+        <td colSpan='6'>{isClicked && <TodoDetail todo={todo} />}</td>
       </tr>
     </>
   );

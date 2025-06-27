@@ -6,27 +6,38 @@ import TodoModal from '../components/todo/TodoModal';
 
 const TodoPage = () => {
   const [todos, setTodos] = useState([]);
-  const [isAddActive, setAddActive] = useState(false);
+  const [isAddFormOpened, setAddFormOpened] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
+  const [selectedTodo, setSelectedTodo] = useState(null);
 
   const handleAdd = async (todo) => {
     try {
       const res = await todoApi.createTodo(todo);
       setTodos([...todos, res.data]);
+      console.log(res.data);
     } catch (error) {
       console.error(error);
     }
   };
 
   const handleEdit = (todo) => {
+    todoApi.updateTodo(todo).then((res) => {
+      console.log(res.data);
+    });
     setTodos(todos.map((e) => (e.no === todo.no ? { ...e, ...todo } : e)));
   };
 
-  const handleEditOpen = () => {
+  const handleEditOpen = (no) => {
+    todoApi.findTodo(no).then((res) => {
+      setSelectedTodo(res.data);
+    });
     setModalOpen(true);
   };
 
   const handleDelete = (todo) => {
+    todoApi.deleteTodo(todo.no).then((res) => {
+      console.log(res.data);
+    });
     setTodos(todos.filter((e) => e.no !== todo.no));
   };
 
@@ -45,14 +56,15 @@ const TodoPage = () => {
         onEditOpen={handleEditOpen}
         onDelete={handleDelete}
       />
-      {isAddActive && (
-        <AddTodoForm onAdd={handleAdd} setActive={setAddActive} />
+      {isAddFormOpened && (
+        <AddTodoForm onAdd={handleAdd} isOpened={setAddFormOpened} />
       )}
-      <button className='btn' onClick={() => setAddActive(true)}>
+      <button className='btn' onClick={() => setAddFormOpened(true)}>
         추가
       </button>
       {isModalOpen && (
         <TodoModal
+          todo={selectedTodo}
           onClose={() => {
             setModalOpen(false);
           }}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const AddTodoForm = ({ onAdd, setActive }) => {
+const AddTodoForm = ({ onAdd, isOpened }) => {
   const [content, setContent] = useState('');
   const [detail, setDetail] = useState('');
 
@@ -11,21 +11,21 @@ const AddTodoForm = ({ onAdd, setActive }) => {
     const newTodo = {
       content: content.trim(),
       detail: detail.trim(),
-      priority: 100,
+      priority: 3,
       done: false,
     };
 
     onAdd(newTodo);
     setContent('');
     setDetail('');
-    setActive(false);
+    isOpened(false);
   };
 
   return (
     <form
       className='add-todo-form'
       onSubmit={handleSubmit}
-      onReset={() => setActive(false)}
+      onReset={() => isOpened(false)}
     >
       <input
         type='text'

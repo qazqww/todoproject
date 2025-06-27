@@ -1,7 +1,7 @@
 import { React, useState } from 'react';
 import { MdExpandMore, MdExpandLess } from 'react-icons/md';
 
-const TodoModal = ({ onClose }) => {
+const TodoModal = ({ todo, onClose }) => {
   const [isDetailOpen, setDetailOpen] = useState(false);
   const [isTimeActive, setTimeActive] = useState(true);
   const [priority, setPriority] = useState(3);
