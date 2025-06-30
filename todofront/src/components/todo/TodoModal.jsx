@@ -1,10 +1,22 @@
-import { React, useState } from 'react';
+import { React, useEffect, useState } from 'react';
 import { MdExpandMore, MdExpandLess } from 'react-icons/md';
 
-const TodoModal = ({ todo, onClose }) => {
+const TodoModal = ({ todo, onUpdate, onClose }) => {
   const [isDetailOpen, setDetailOpen] = useState(false);
   const [isTimeActive, setTimeActive] = useState(true);
-  const [priority, setPriority] = useState(3);
+  const [todoForm, setTodoForm] = useState({
+    no: todo.no,
+    content: todo.content,
+    detail: todo.detail,
+    createdTime: todo.createdTime,
+    priority: todo.priority,
+    done: todo.done,
+    colorType: todo.colorType,
+  });
+
+  useEffect(() => {
+    console.log(todo);
+  }, []);
 
   return (
     <div
@@ -21,12 +33,22 @@ const TodoModal = ({ todo, onClose }) => {
           <input
             type='text'
             className='w-5/6 border-b border-blue-500 focus:outline-none'
+            value={todoForm.content}
+            onChange={(e) =>
+              setTodoForm({ ...todoForm, content: e.target.value })
+            }
           />
         </div>
         {/* 설명 */}
         <div className='flex my-5'>
           <label className='label'>설명</label>
-          <textarea className='w-11/12 h-25 rounded-xl bg-gray-300 p-2 resize-none focus:outline-none' />
+          <textarea
+            className='w-11/12 h-25 rounded-xl bg-gray-300 p-2 resize-none focus:outline-none'
+            value={todoForm.detail}
+            onChange={(e) =>
+              setTodoForm({ ...todoForm, detail: e.target.value })
+            }
+          />
         </div>
         {isDetailOpen && (
           <>
@@ -55,9 +77,9 @@ const TodoModal = ({ todo, onClose }) => {
                 {[1, 2, 3, 4, 5].map((num) => (
                   <button
                     key={num}
-                    onClick={() => setPriority(num)}
+                    onClick={(e) => setTodoForm({ ...todoForm, priority: num })}
                     className={`rounded-full
-            ${priority === num ? 'bg-blue-500 text-white' : 'bg-gray-300 text-black'}`}
+            ${todoForm.priority === num ? 'bg-blue-500 text-white' : 'bg-gray-300 text-black'}`}
                   >
                     {num}
                   </button>
@@ -68,7 +90,14 @@ const TodoModal = ({ todo, onClose }) => {
             <div className='flex my-5 items-center'>
               <label className='label'>완료 여부</label>
               <label className='relative inline-flex items-center cursor-pointer'>
-                <input type='checkbox' className='sr-only peer' />
+                <input
+                  type='checkbox'
+                  className='sr-only peer'
+                  checked={todoForm.done}
+                  onChange={(e) =>
+                    setTodoForm({ ...todoForm, done: e.target.checked })
+                  }
+                />
                 <div className='w-11 h-6 bg-gray-300 peer-checked:bg-blue-500 rounded-full peer peer-focus:ring-2 ring-blue-300 transition-all'></div>
                 <div className='absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full peer-checked:translate-x-5 transition-transform'></div>
               </label>
@@ -76,13 +105,20 @@ const TodoModal = ({ todo, onClose }) => {
             {/* 분류 */}
             <div className='flex my-5'>
               <label className='label block mb-1'>분류</label>
-              <select className='w-15 bg-gray-300 rounded-full px-4 py-1'>
-                <option value='red'>🔴</option>
-                <option value='orange'>🟠</option>
-                <option value='yellow'>🟡</option>
-                <option value='green'>🟢</option>
-                <option value='blue'>🔵</option>
-                <option value='violet'>🟣</option>
+              <select
+                className='w-20 bg-gray-300 rounded-full px-4 py-1'
+                value={todoForm.colorType}
+                onChange={(e) =>
+                  setTodoForm({ ...todoForm, colorType: e.target.value })
+                }
+              >
+                <option value='NONE'>미분류</option>
+                <option value='RED'>🔴</option>
+                <option value='ORANGE'>🟠</option>
+                <option value='YELLOW'>🟡</option>
+                <option value='GREEN'>🟢</option>
+                <option value='BLUE'>🔵</option>
+                <option value='VIOLET'>🟣</option>
               </select>
             </div>
           </>
@@ -100,7 +136,7 @@ const TodoModal = ({ todo, onClose }) => {
             </button>
             <button
               className='bg-blue-500 mt-4 text-sm text-white'
-              onClick={onClose}
+              onClick={() => onUpdate(todoForm)}
             >
               완료
             </button>

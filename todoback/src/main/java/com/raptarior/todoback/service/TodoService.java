@@ -25,8 +25,8 @@ public class TodoService {
     public TodoResponse createTodo(TodoRequest request) {
         Todo todo = Todo.builder()
                 .content(request.getContent())
+                .detail(request.getDetail())
                 .priority(request.getPriority())
-                .createdTime(request.getCreatedTime())
                 .isDone(request.isDone())
                 .build();
         Todo result = todoRepository.save(todo);

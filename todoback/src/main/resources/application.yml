@@ -8,5 +8,5 @@ spring:
     password: ${H2_PASSWORD}
   jpa:
     hibernate:
-      ddl-auto: create
-    show-sql: true
+      ddl-auto: validate
+    show-sql: false

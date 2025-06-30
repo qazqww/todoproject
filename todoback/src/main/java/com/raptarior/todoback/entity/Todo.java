@@ -40,5 +40,6 @@ public class Todo {
     @PrePersist
     protected void onCreate() {
         this.createdTime = LocalDateTime.now();
+        this.colorType = ColorType.NONE;
     }
 }

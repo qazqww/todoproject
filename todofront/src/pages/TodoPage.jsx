@@ -30,8 +30,16 @@ const TodoPage = () => {
   const handleEditOpen = (no) => {
     todoApi.findTodo(no).then((res) => {
       setSelectedTodo(res.data);
+      setModalOpen(true);
     });
-    setModalOpen(true);
+  };
+
+  const handleUpdate = (todo) => {
+    todoApi.updateTodo(todo).then((res) => {
+      setTodos(todos.map((e) => (e.no === todo.no ? { ...e, ...todo } : e)));
+      console.log(res.data);
+    });
+    setModalOpen(false);
   };
 
   const handleDelete = (todo) => {
@@ -69,6 +77,7 @@ const TodoPage = () => {
       {isModalOpen && (
         <TodoModal
           todo={selectedTodo}
+          onUpdate={handleUpdate}
           onClose={() => {
             setModalOpen(false);
           }}
