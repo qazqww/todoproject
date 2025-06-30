@@ -59,7 +59,11 @@ const TodoPage = () => {
       {isAddFormOpened && (
         <AddTodoForm onAdd={handleAdd} isOpened={setAddFormOpened} />
       )}
-      <button className='btn' onClick={() => setAddFormOpened(true)}>
+      <button
+        className={`${isAddFormOpened ? 'disabledBtn' : 'btn'}`}
+        onClick={() => setAddFormOpened(true)}
+        disabled={isAddFormOpened}
+      >
         추가
       </button>
       {isModalOpen && (

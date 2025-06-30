@@ -30,7 +30,6 @@ const TodoItem = ({ todo, onEdit, onDelete, onEditOpen }) => {
           className='content'
           onClick={() => {
             setClicked(!isClicked);
-            console.log(isClicked);
           }}
         >
           {todo.content}

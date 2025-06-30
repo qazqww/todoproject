@@ -23,7 +23,7 @@ const AddTodoForm = ({ onAdd, isOpened }) => {
 
   return (
     <form
-      className='add-todo-form'
+      className='add-todo-form space-x-5'
       onSubmit={handleSubmit}
       onReset={() => isOpened(false)}
     >
@@ -39,8 +39,14 @@ const AddTodoForm = ({ onAdd, isOpened }) => {
         onChange={(e) => setDetail(e.target.value)}
         placeholder='설명'
       />
-      <button type='reset'>취소</button>
-      <button type='submit'>완료</button>
+      <span className='space-x-2'>
+        <button className='btn' type='reset'>
+          취소
+        </button>
+        <button className='okBtn' type='submit'>
+          완료
+        </button>
+      </span>
     </form>
   );
 };

@@ -60,6 +60,20 @@ button:focus-visible {
   background-color: #f3f4f6;
 }
 
+.okBtn {
+  background-color: #256dfc;
+  color: #ffffff;
+}
+
+.disabledBtn {
+  background-color: #f3f4f6;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+.disabledBtn:hover {
+  border-color: transparent;
+}
+
 .label {
   font-size: 1em;
   font-weight: 600;
