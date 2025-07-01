@@ -26,8 +26,6 @@ public class TodoService {
         Todo todo = Todo.builder()
                 .content(request.getContent())
                 .detail(request.getDetail())
-                .priority(request.getPriority())
-                .isDone(request.isDone())
                 .build();
         Todo result = todoRepository.save(todo);
 
@@ -48,10 +46,7 @@ public class TodoService {
 
     @Transactional
     public TodoResponse updateTodo(Long todoId, TodoRequest todoRequest) {
-        Todo todo = todoRepository.findById(todoId).orElseThrow();
-        todo.setContent(todoRequest.getContent());
-        todo.setPriority(todoRequest.getPriority());
-        todo.setDone(todoRequest.isDone());
+        Todo todo = modelMapper.map(todoRequest, Todo.class);
 
         if (todoRequest.isDone()) {
             todo.setDoneTime(LocalDateTime.now());
@@ -59,6 +54,7 @@ public class TodoService {
             todo.setDoneTime(null);
         }
 
+        todoRepository.save(todo);
         return modelMapper.map(todo, TodoResponse.class);
     }
 

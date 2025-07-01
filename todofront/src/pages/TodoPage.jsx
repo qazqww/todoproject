@@ -14,20 +14,13 @@ const TodoPage = () => {
     try {
       const res = await todoApi.createTodo(todo);
       setTodos([...todos, res.data]);
-      console.log(res.data);
+      console.log('Todo Added : ', res.data);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const handleEdit = (todo) => {
-    todoApi.updateTodo(todo).then((res) => {
-      console.log(res.data);
-    });
-    setTodos(todos.map((e) => (e.no === todo.no ? { ...e, ...todo } : e)));
-  };
-
-  const handleEditOpen = (no) => {
+  const handleEdit = (no) => {
     todoApi.findTodo(no).then((res) => {
       setSelectedTodo(res.data);
       setModalOpen(true);
@@ -37,7 +30,7 @@ const TodoPage = () => {
   const handleUpdate = (todo) => {
     todoApi.updateTodo(todo).then((res) => {
       setTodos(todos.map((e) => (e.no === todo.no ? { ...e, ...todo } : e)));
-      console.log(res.data);
+      console.log('Todo updated : ', res.data);
     });
     setModalOpen(false);
   };
@@ -58,12 +51,7 @@ const TodoPage = () => {
   return (
     <div className='w-screen h-screen m-auto bg-gray-200 p-6 rounded shadow-lg'>
       <h1 className='text-2xl font-bold mb-6'>목록</h1>
-      <TodoList
-        todos={todos}
-        onEdit={handleEdit}
-        onEditOpen={handleEditOpen}
-        onDelete={handleDelete}
-      />
+      <TodoList todos={todos} onEdit={handleEdit} onDelete={handleDelete} />
       {isAddFormOpened && (
         <AddTodoForm onAdd={handleAdd} isOpened={setAddFormOpened} />
       )}

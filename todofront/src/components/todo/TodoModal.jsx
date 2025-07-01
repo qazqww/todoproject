@@ -11,12 +11,8 @@ const TodoModal = ({ todo, onUpdate, onClose }) => {
     createdTime: todo.createdTime,
     priority: todo.priority,
     done: todo.done,
-    colorType: todo.colorType,
+    colorType: todo.colorType || 'NONE',
   });
-
-  useEffect(() => {
-    console.log(todo);
-  }, []);
 
   return (
     <div

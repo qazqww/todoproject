@@ -3,7 +3,7 @@ import { CiCircleMore } from 'react-icons/ci';
 import TodoDetail from './TodoDetail';
 import TodoDropdown from './TodoDropdown';
 
-const TodoItem = ({ todo, onEdit, onDelete, onEditOpen }) => {
+const TodoItem = ({ todo, onEdit, onDelete }) => {
   const [isClicked, setClicked] = useState(false);
   const [isChecked, setChecked] = useState(todo.done);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -52,7 +52,7 @@ const TodoItem = ({ todo, onEdit, onDelete, onEditOpen }) => {
             <TodoDropdown
               todo={todo}
               onDelete={onDelete}
-              onEditOpen={onEditOpen}
+              onEdit={onEdit}
               setMenuOpen={setMenuOpen}
             />
           )}

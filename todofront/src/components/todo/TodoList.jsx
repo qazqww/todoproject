@@ -1,7 +1,7 @@
 import React from 'react';
 import TodoItem from './TodoItem';
 
-const TodoList = ({ todos, onEdit, onDelete, onEditOpen }) => {
+const TodoList = ({ todos, onEdit, onDelete }) => {
   return (
     <div>
       <table className='w-full mb-4 text-center text-sm'>
@@ -23,7 +23,6 @@ const TodoList = ({ todos, onEdit, onDelete, onEditOpen }) => {
                 todo={todo}
                 onEdit={onEdit}
                 onDelete={onDelete}
-                onEditOpen={onEditOpen}
               />
             );
           })}
