@@ -4,7 +4,9 @@ import com.raptarior.todoback.common.ColorType;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity
 @Getter
@@ -34,12 +36,15 @@ public class Todo {
 
     private String detail;
 
-    private LocalDateTime ddayTime;
+    private LocalDate dday;
+
+    private LocalTime ddayTime;
 
 
     @PrePersist
     protected void onCreate() {
         this.createdTime = LocalDateTime.now();
         this.colorType = ColorType.NONE;
+        this.priority = 3;
     }
 }

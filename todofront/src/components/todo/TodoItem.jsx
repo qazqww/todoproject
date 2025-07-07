@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { CiCircleMore } from 'react-icons/ci';
+import dayjs from 'dayjs';
 import TodoDetail from './TodoDetail';
 import TodoDropdown from './TodoDropdown';
 
@@ -35,7 +36,9 @@ const TodoItem = ({ todo, onEdit, onDelete }) => {
           {todo.content}
         </td>
         <td className='priority'>{todo.priority}</td>
-        <td className='dday'>D-</td>
+        <td className='dday'>
+          {todo.dday ? `D-${dayjs(todo.dday).diff(dayjs(), 'day')}` : '-'}
+        </td>
         <td className='isdone'>
           <input
             type='checkbox'

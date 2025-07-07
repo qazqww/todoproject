@@ -13,8 +13,8 @@ const TodoDetail = ({ todo }) => {
     <div className='bg-amber-100 py-3'>
       <div className='flex justify-between mx-10'>
         <div className='detail-content'>{todo.detail}</div>
-        <table className='border-separate border-spacing-x-4'>
-          <tbody className='text-sm'>
+        <table className='border-separate border-spacing-x-4 text-xs'>
+          <tbody>
             <tr>
               <td>기한</td>
               <td>{formatDate(todo.ddayTime)}</td>

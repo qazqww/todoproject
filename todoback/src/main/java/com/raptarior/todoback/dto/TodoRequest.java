@@ -6,7 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Data
 @Builder
@@ -29,5 +31,7 @@ public class TodoRequest {
 
     private String detail;
 
-    private LocalDateTime ddayTime;
+    private LocalDate dday;
+
+    private LocalTime ddayTime;
 }

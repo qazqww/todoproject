@@ -1,5 +1,6 @@
 import { React, useEffect, useState } from 'react';
 import { MdExpandMore, MdExpandLess } from 'react-icons/md';
+import dayjs from 'dayjs';
 
 const TodoModal = ({ todo, onUpdate, onClose }) => {
   const [isDetailOpen, setDetailOpen] = useState(false);
@@ -7,11 +8,14 @@ const TodoModal = ({ todo, onUpdate, onClose }) => {
   const [todoForm, setTodoForm] = useState({
     no: todo.no,
     content: todo.content,
-    detail: todo.detail,
-    createdTime: todo.createdTime,
     priority: todo.priority,
+    createdTime: todo.createdTime,
+    doneTime: todo.doneTime || '',
     done: todo.done,
     colorType: todo.colorType || 'NONE',
+    detail: todo.detail,
+    dday: todo.dday || dayjs('2099-12-31').format('YYYY-MM-DD'),
+    ddayTime: todo.ddayTime || dayjs('23:59').format('HH:mm'),
   });
 
   return (
@@ -52,10 +56,24 @@ const TodoModal = ({ todo, onUpdate, onClose }) => {
             <div className='flex justify-between my-5 items-center space-x-2'>
               <div className='flex'>
                 <label className='label'>기한</label>
-                <input type='date' className='border px-1 text-sm' />
+                <input
+                  type='date'
+                  className='border px-1 text-sm'
+                  value={todoForm.dday}
+                  onChange={(e) =>
+                    setTodoForm({ ...todoForm, dday: e.target.value })
+                  }
+                />
               </div>
               {isTimeActive && (
-                <input type='time' className='border px-1 text-sm' />
+                <input
+                  type='time'
+                  className='border px-1 text-sm'
+                  value={todoForm.ddayTime}
+                  onChange={(e) => {
+                    setTodoForm({ ...todoForm, ddayTime: e.target.value });
+                  }}
+                />
               )}
               <label className='flex items-center space-x-1'>
                 <input
@@ -132,7 +150,10 @@ const TodoModal = ({ todo, onUpdate, onClose }) => {
             </button>
             <button
               className='bg-blue-500 mt-4 text-sm text-white'
-              onClick={() => onUpdate(todoForm)}
+              onClick={() => {
+                onUpdate(todoForm);
+                console.log('update - ', todoForm);
+              }}
             >
               완료
             </button>
