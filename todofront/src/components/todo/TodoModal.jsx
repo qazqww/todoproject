@@ -1,10 +1,12 @@
-import { React, useEffect, useState } from 'react';
+import { React, useEffect, useRef, useState } from 'react';
 import { MdExpandMore, MdExpandLess } from 'react-icons/md';
 import dayjs from 'dayjs';
+import { DdayType } from '../../constants/DdayType';
 
 const TodoModal = ({ todo, onUpdate, onClose }) => {
   const [isDetailOpen, setDetailOpen] = useState(false);
-  const [isTimeActive, setTimeActive] = useState(true);
+  const [isDdayActive, setDdayActive] = useState(false);
+  const [isTimeActive, setTimeActive] = useState(false);
   const [todoForm, setTodoForm] = useState({
     no: todo.no,
     content: todo.content,
@@ -14,9 +16,23 @@ const TodoModal = ({ todo, onUpdate, onClose }) => {
     done: todo.done,
     colorType: todo.colorType || 'NONE',
     detail: todo.detail,
-    dday: todo.dday || dayjs('2099-12-31').format('YYYY-MM-DD'),
-    ddayTime: todo.ddayTime || dayjs('23:59').format('HH:mm'),
+    ddayType: todo.ddayType,
+    dday: todo.dday || dayjs().format('YYYY-MM-DD'),
+    ddayTime: todo.ddayTime || '23:59',
   });
+
+  useEffect(() => {
+    if (todoForm.ddayType === DdayType.NONE) {
+      setDdayActive(false);
+      setTimeActive(false);
+    } else if (todoForm.ddayType === DdayType.DATE_ONLY) {
+      setDdayActive(true);
+      setTimeActive(false);
+    } else if (todoForm.ddayType === DdayType.DATE_TIME) {
+      setDdayActive(true);
+      setTimeActive(true);
+    }
+  }, [todoForm.ddayType]);
 
   return (
     <div
@@ -53,37 +69,51 @@ const TodoModal = ({ todo, onUpdate, onClose }) => {
         {isDetailOpen && (
           <>
             {/* 기한 */}
-            <div className='flex justify-between my-5 items-center space-x-2'>
-              <div className='flex'>
-                <label className='label'>기한</label>
+            <div className='flex items-start'>
+              <label className='label'>기한 설정</label>
+              <label className='relative flex items-center cursor-pointer'>
                 <input
-                  type='date'
-                  className='border px-1 text-sm'
-                  value={todoForm.dday}
-                  onChange={(e) =>
-                    setTodoForm({ ...todoForm, dday: e.target.value })
-                  }
+                  type='checkbox'
+                  className='sr-only peer'
+                  checked={isDdayActive}
+                  onChange={(e) => setDdayActive(e.target.checked)}
                 />
-              </div>
-              {isTimeActive && (
+                <div className='w-11 h-6 bg-gray-300 peer-checked:bg-blue-500 rounded-full peer peer-focus:ring-2 ring-blue-300 transition-all'></div>
+                <div className='absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full peer-checked:translate-x-5 transition-transform'></div>
+              </label>
+            </div>
+            {isDdayActive && (
+              <div className='flex justify-between mt-2'>
+                <div className='flex'>
+                  <label className='label'></label>
+                  <input
+                    type='date'
+                    className='border px-1 text-sm'
+                    value={todoForm.dday}
+                    onChange={(e) =>
+                      setTodoForm({ ...todoForm, dday: e.target.value })
+                    }
+                  />
+                </div>
                 <input
                   type='time'
                   className='border px-1 text-sm'
                   value={todoForm.ddayTime}
-                  onChange={(e) => {
-                    setTodoForm({ ...todoForm, ddayTime: e.target.value });
-                  }}
+                  onChange={(e) =>
+                    setTodoForm({ ...todoForm, ddayTime: e.target.value })
+                  }
+                  disabled={!isTimeActive}
                 />
-              )}
-              <label className='flex items-center space-x-1'>
-                <input
-                  type='checkbox'
-                  value={isTimeActive}
-                  onClick={() => setTimeActive(!isTimeActive)}
-                />
-                <span className='text-sm'>시간 제외</span>
-              </label>
-            </div>
+                <label className='flex items-center space-x-1'>
+                  <input
+                    type='checkbox'
+                    checked={isTimeActive}
+                    onChange={() => setTimeActive(!isTimeActive)}
+                  />
+                  <span className='text-sm'>시간 포함</span>
+                </label>
+              </div>
+            )}
             {/* 우선순위 */}
             <div className='flex my-5 items-center'>
               <label className='label block mb-1'>우선 순위</label>
@@ -151,6 +181,13 @@ const TodoModal = ({ todo, onUpdate, onClose }) => {
             <button
               className='bg-blue-500 mt-4 text-sm text-white'
               onClick={() => {
+                if (isDdayActive && isTimeActive) {
+                  todoForm.ddayType = DdayType.DATE_TIME;
+                } else if (isDdayActive && !isTimeActive) {
+                  todoForm.ddayType = DdayType.DATE_ONLY;
+                } else {
+                  todoForm.ddayType = DdayType.NONE;
+                }
                 onUpdate(todoForm);
                 console.log('update - ', todoForm);
               }}

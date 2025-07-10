@@ -6,7 +6,9 @@ const TodoDetail = ({ todo }) => {
     return time ? dayjs(time).format('YY-MM-DD') : '-';
   };
   const formatTime = (time) => {
-    return time ? dayjs(time).format('HH:mm') : '';
+    return dayjs(time).format('HH:mm') === 'Invalid Date'
+      ? time
+      : dayjs(time).format('HH:mm');
   };
 
   return (
@@ -17,7 +19,7 @@ const TodoDetail = ({ todo }) => {
           <tbody>
             <tr>
               <td>기한</td>
-              <td>{formatDate(todo.ddayTime)}</td>
+              <td>{formatDate(todo.dday)}</td>
               <td>{formatTime(todo.ddayTime)}</td>
             </tr>
             <tr>

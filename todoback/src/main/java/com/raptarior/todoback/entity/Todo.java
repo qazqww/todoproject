@@ -1,6 +1,7 @@
 package com.raptarior.todoback.entity;
 
 import com.raptarior.todoback.common.ColorType;
+import com.raptarior.todoback.common.DdayType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -36,10 +37,12 @@ public class Todo {
 
     private String detail;
 
+    @Enumerated(EnumType.STRING)
+    private DdayType ddayType;
+
     private LocalDate dday;
 
     private LocalTime ddayTime;
-
 
     @PrePersist
     protected void onCreate() {

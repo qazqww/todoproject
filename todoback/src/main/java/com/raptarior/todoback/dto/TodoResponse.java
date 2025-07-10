@@ -1,6 +1,7 @@
 package com.raptarior.todoback.dto;
 
 import com.raptarior.todoback.common.ColorType;
+import com.raptarior.todoback.common.DdayType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,6 +31,8 @@ public class TodoResponse {
     private ColorType colorType;
 
     private String detail;
+
+    private DdayType ddayType;
 
     private LocalDate dday;
 

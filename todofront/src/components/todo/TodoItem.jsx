@@ -37,7 +37,11 @@ const TodoItem = ({ todo, onEdit, onDelete }) => {
         </td>
         <td className='priority'>{todo.priority}</td>
         <td className='dday'>
-          {todo.dday ? `D-${dayjs(todo.dday).diff(dayjs(), 'day')}` : '-'}
+          {todo.ddayType === 'NONE'
+            ? '-'
+            : todo.dday
+              ? `D-${dayjs(todo.dday).diff(dayjs(), 'day')}`
+              : '-'}
         </td>
         <td className='isdone'>
           <input
