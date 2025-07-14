@@ -3,12 +3,14 @@ import { CiCircleMore } from 'react-icons/ci';
 import dayjs from 'dayjs';
 import TodoDetail from './TodoDetail';
 import TodoDropdown from './TodoDropdown';
+import { updateTodo } from '../../api/todoApi';
 
 const TodoItem = ({ todo, onEdit, onDelete }) => {
   const [isClicked, setClicked] = useState(false);
   const [isChecked, setChecked] = useState(todo.done);
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef(null);
+  const timeoutRef = useRef();
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -22,6 +24,22 @@ const TodoItem = ({ todo, onEdit, onDelete }) => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    setChecked(todo.done);
+  }, [todo.done]);
+
+  const debounce = (func, value, delay) => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+      timeoutRef.current = setTimeout(() => {
+        func(value);
+        console.log('updated', value);
+      }, delay);
+    };
+  };
 
   return (
     <>
@@ -40,15 +58,18 @@ const TodoItem = ({ todo, onEdit, onDelete }) => {
           {todo.ddayType === 'NONE'
             ? '-'
             : todo.dday
-              ? `D-${dayjs(todo.dday).diff(dayjs(), 'day')}`
+              ? `D - ${dayjs(todo.dday).diff(dayjs(), 'day')}`
               : '-'}
         </td>
         <td className='isdone'>
           <input
             type='checkbox'
             checked={isChecked}
-            onClick={() => setChecked(!isChecked)}
-            onChange={() => {}}
+            onChange={() => {
+              todo.done = !isChecked;
+              setChecked(!isChecked);
+              debounce(updateTodo, todo, 500)();
+            }}
           ></input>
         </td>
         <td className='more' ref={menuRef}>
