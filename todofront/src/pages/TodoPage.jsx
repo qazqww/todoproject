@@ -42,6 +42,12 @@ const TodoPage = () => {
     setTodos(todos.filter((e) => e.no !== todo.no));
   };
 
+  const sortByPriority = () => {};
+
+  const sortByDday = () => {};
+
+  const sortByDone = () => {};
+
   useEffect(() => {
     todoApi.findAllTodo().then((res) => {
       setTodos(res.data);
@@ -51,7 +57,14 @@ const TodoPage = () => {
   return (
     <div className='w-screen h-screen m-auto bg-gray-200 p-6 rounded shadow-lg'>
       <h1 className='text-2xl font-bold mb-6'>목록</h1>
-      <TodoList todos={todos} onEdit={handleEdit} onDelete={handleDelete} />
+      <TodoList
+        todos={todos}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
+        onSortPriority={sortByPriority}
+        onSortDday={sortByDday}
+        onSortDone={sortByDone}
+      />
       {isAddFormOpened && (
         <AddTodoForm onAdd={handleAdd} isOpened={setAddFormOpened} />
       )}

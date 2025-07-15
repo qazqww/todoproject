@@ -1,7 +1,15 @@
 import React from 'react';
 import TodoItem from './TodoItem';
+import { TiArrowSortedDown } from 'react-icons/ti';
 
-const TodoList = ({ todos, onEdit, onDelete }) => {
+const TodoList = ({
+  todos,
+  onEdit,
+  onDelete,
+  onSortPriority,
+  onSortDday,
+  onSortDone,
+}) => {
   return (
     <div>
       <table className='w-full mb-4 text-center text-sm'>
@@ -9,9 +17,30 @@ const TodoList = ({ todos, onEdit, onDelete }) => {
           <tr>
             <th className='w-1/32'> </th>
             <th className='w-1/3'>할 일</th>
-            <th className='w-1/8'>우선순위</th>
-            <th className='w-1/8'>D-Day</th>
-            <th className='w-1/8'>완료 여부</th>
+            <th className='w-1/8'>
+              <span className='flex justify-center'>
+                우선순위
+                <button className='sortBtn' onClick={onSortPriority}>
+                  <TiArrowSortedDown />
+                </button>
+              </span>
+            </th>
+            <th className='w-1/8'>
+              <span className='flex justify-center'>
+                D-Day
+                <button className='sortBtn' onClick={onSortDday}>
+                  <TiArrowSortedDown />
+                </button>
+              </span>
+            </th>
+            <th className='w-1/8'>
+              <span className='flex justify-center'>
+                완료 여부
+                <button className='sortBtn' onClick={onSortDone}>
+                  <TiArrowSortedDown />
+                </button>
+              </span>
+            </th>
             <th className='w-1/8'>설정</th>
           </tr>
         </thead>

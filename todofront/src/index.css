@@ -65,6 +65,14 @@ button:focus-visible {
   color: #ffffff;
 }
 
+.sortBtn {
+  padding: 0.3em 0.6em;
+  border: none;
+}
+.sortBtn:hover {
+  background-color: #aaaaaa;
+}
+
 .disabledBtn {
   background-color: #f3f4f6;
   color: #9ca3af;
