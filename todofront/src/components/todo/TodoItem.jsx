@@ -12,6 +12,15 @@ const TodoItem = ({ todo, onEdit, onDelete }) => {
   const menuRef = useRef(null);
   const timeoutRef = useRef();
 
+  const colorTypeClass = {
+    RED: 'bg-red-300',
+    ORANGE: 'bg-orange-300',
+    YELLOW: 'bg-yellow-300',
+    GREEN: 'bg-green-300',
+    BLUE: 'bg-blue-300',
+    VIOLET: 'bg-violet-300',
+  }[todo.colorType];
+
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
@@ -44,7 +53,7 @@ const TodoItem = ({ todo, onEdit, onDelete }) => {
   return (
     <>
       <tr className='todo-item'>
-        <td className={`colortype bg-${todo.colorType}-500`}></td>
+        <td className={`${colorTypeClass}`}></td>
         <td
           className='content'
           onClick={() => {
