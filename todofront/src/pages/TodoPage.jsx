@@ -3,6 +3,7 @@ import * as todoApi from '../api/todoApi';
 import TodoList from '../components/todo/TodoList';
 import AddTodoForm from '../components/todo/AddTodoForm';
 import TodoModal from '../components/todo/TodoModal';
+import dayjs from 'dayjs';
 
 const TodoPage = () => {
   const [todos, setTodos] = useState([]);
@@ -42,11 +43,35 @@ const TodoPage = () => {
     setTodos(todos.filter((e) => e.no !== todo.no));
   };
 
-  const sortByPriority = () => {};
+  const sortByPriority = () => {
+    const sorted = [...todos].sort((a, b) => {
+      return a.priority - b.priority;
+    });
+    setTodos(sorted);
+  };
 
-  const sortByDday = () => {};
+  const sortByDday = () => {
+    const sorted = [...todos].sort((a, b) => {
+      if (a.ddayType === 'NONE' && b.ddayType === 'NONE') return 0;
+      if (a.ddayType === 'NONE') return 1;
+      if (b.ddayType === 'NONE') return -1;
 
-  const sortByDone = () => {};
+      const aDday = dayjs(a.dday).diff(dayjs(), 'day');
+      const bDday = dayjs(b.dday).diff(dayjs(), 'day');
+      return aDday - bDday;
+    });
+    setTodos(sorted);
+  };
+
+  const sortByDone = () => {
+    const sorted = [...todos].sort((a, b) => {
+      if (a.done === b.done) return 0;
+      if (a.done) return 1;
+      if (b.done) return -1;
+      return 0;
+    });
+    setTodos(sorted);
+  };
 
   useEffect(() => {
     todoApi.findAllTodo().then((res) => {

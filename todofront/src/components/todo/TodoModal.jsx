@@ -185,8 +185,11 @@ const TodoModal = ({ todo, onUpdate, onClose }) => {
                   todoForm.ddayType = DdayType.DATE_TIME;
                 } else if (isDdayActive && !isTimeActive) {
                   todoForm.ddayType = DdayType.DATE_ONLY;
+                  todoForm.ddayTime = null;
                 } else {
                   todoForm.ddayType = DdayType.NONE;
+                  todoForm.dday = null;
+                  todoForm.ddayTime = null;
                 }
                 onUpdate(todoForm);
                 console.log('update - ', todoForm);
