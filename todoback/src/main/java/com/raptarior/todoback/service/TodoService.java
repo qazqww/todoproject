@@ -1,5 +1,7 @@
 package com.raptarior.todoback.service;
 
+import com.raptarior.todoback.dto.TodoExpandResponse;
+import com.raptarior.todoback.dto.TodoMainResponse;
 import com.raptarior.todoback.dto.TodoRequest;
 import com.raptarior.todoback.dto.TodoResponse;
 import com.raptarior.todoback.entity.Todo;
@@ -23,14 +25,14 @@ public class TodoService {
     @Autowired
     private final ModelMapper modelMapper;
 
-    public TodoResponse createTodo(TodoRequest request) {
+    public TodoMainResponse createTodo(TodoRequest request) {
         Todo todo = Todo.builder()
                 .content(request.getContent())
                 .detail(request.getDetail())
                 .build();
         Todo result = todoRepository.save(todo);
 
-        return modelMapper.map(result, TodoResponse.class);
+        return modelMapper.map(result, TodoMainResponse.class);
     }
 
     public TodoResponse findTodo(Long id) {
@@ -38,16 +40,22 @@ public class TodoService {
         return modelMapper.map(result, TodoResponse.class);
     }
 
-    public List<TodoResponse> findAllTodo() {
+    public List<TodoMainResponse> findAllTodo() {
         List<Todo> result = todoRepository.findAll();
         return result.stream()
-                .map(source -> modelMapper.map(source, TodoResponse.class))
+                .map(source -> modelMapper.map(source, TodoMainResponse.class))
                 .toList();
+    }
+
+    public TodoExpandResponse findTodoExpand(Long id) {
+        Todo result = todoRepository.findById(id).orElseThrow();
+        return modelMapper.map(result, TodoExpandResponse.class);
     }
 
     @Transactional
     public TodoResponse updateTodo(Long todoId, TodoRequest todoRequest) {
         Todo todo = modelMapper.map(todoRequest, Todo.class);
+        todo.setNo(todoId);
 
         if (todoRequest.isDone()) {
             todo.setDoneTime(LocalDateTime.now());

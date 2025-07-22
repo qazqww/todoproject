@@ -1,5 +1,7 @@
 package com.raptarior.todoback.controller;
 
+import com.raptarior.todoback.dto.TodoExpandResponse;
+import com.raptarior.todoback.dto.TodoMainResponse;
 import com.raptarior.todoback.dto.TodoRequest;
 import com.raptarior.todoback.dto.TodoResponse;
 import com.raptarior.todoback.service.TodoService;
@@ -20,8 +22,8 @@ public class TodoController {
     private final TodoService todoService;
 
     @PostMapping
-    public ResponseEntity<TodoResponse> createTodo(@RequestBody TodoRequest request) {
-        TodoResponse response = todoService.createTodo(request);
+    public ResponseEntity<TodoMainResponse> createTodo(@RequestBody TodoRequest request) {
+        TodoMainResponse response = todoService.createTodo(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
@@ -32,9 +34,15 @@ public class TodoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TodoResponse>> findAllTodo() {
-        List<TodoResponse> responseList = todoService.findAllTodo();
+    public ResponseEntity<List<TodoMainResponse>> findAllTodo() {
+        List<TodoMainResponse> responseList = todoService.findAllTodo();
         return ResponseEntity.status(HttpStatus.OK).body(responseList);
+    }
+
+    @GetMapping("/{todoId}/expand")
+    public ResponseEntity<TodoExpandResponse> findTodoExpand(@PathVariable Long todoId) {
+        TodoExpandResponse response = todoService.findTodoExpand(todoId);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PutMapping("/{todoId}")

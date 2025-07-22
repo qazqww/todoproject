@@ -1,7 +1,11 @@
-import React from 'react';
+import { React, useEffect } from 'react';
 import dayjs from 'dayjs';
 
-const TodoDetail = ({ todo }) => {
+const TodoDetail = ({ todo, onExpand }) => {
+  useEffect(() => {
+    onExpand(todo.no);
+  }, []);
+
   const formatDate = (time) => {
     return time ? dayjs(time).format('YY-MM-DD') : '-';
   };

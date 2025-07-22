@@ -1,6 +1,7 @@
 package com.raptarior.todoback.service;
 
 import com.raptarior.todoback.common.ColorType;
+import com.raptarior.todoback.dto.TodoMainResponse;
 import com.raptarior.todoback.dto.TodoRequest;
 import com.raptarior.todoback.dto.TodoResponse;
 import com.raptarior.todoback.entity.Todo;
@@ -57,21 +58,30 @@ public class TodoServiceTest {
     void createAndUpdate() {
         // given
         Todo todo = Todo.builder()
-                .content("할 일")
+                .content("다른 할 일")
+                .detail("내용")
                 .priority(2)
-                .isDone(false)
                 .build();
 
         TodoRequest origin = modelMapper.map(todo, TodoRequest.class);
-        TodoResponse result = todoService.createTodo(origin);
+        TodoMainResponse result = todoService.createTodo(origin);
 
         // when
-        TodoRequest request = new TodoRequest(null, "수정된 할 일", 3,
-                null, null, true, ColorType.BLUE, "세부 내용", null);
-        todoService.updateTodo(result.getNo(), request);
-        TodoResponse response = todoService.findTodo(result.getNo());
+        Todo todoReq = Todo.builder()
+                .content("수정된 할 일")
+                .priority(3)
+                .isDone(true)
+                .colorType(ColorType.BLUE)
+                .detail("세부 내용")
+                .build();
+        TodoRequest request = modelMapper.map(todoReq, TodoRequest.class);
+
+        Long no = todoService.updateTodo(result.getNo(), request).getNo();
+        TodoResponse response = todoService.findTodo(no);
 
         // then
+        System.out.println(result);
+        System.out.println(response);
         assertThat(response.getPriority()).isEqualTo(3);
         assertThat(response.getContent()).isEqualTo("수정된 할 일");
     }
@@ -86,7 +96,7 @@ public class TodoServiceTest {
                 .build();
 
         TodoRequest request = modelMapper.map(todo, TodoRequest.class);
-        TodoResponse response = todoService.createTodo(request);
+        TodoMainResponse response = todoService.createTodo(request);
 
         // when
         todoService.deleteTodo(response.getNo());

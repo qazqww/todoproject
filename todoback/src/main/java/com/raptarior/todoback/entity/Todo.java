@@ -33,11 +33,13 @@ public class Todo {
     private boolean isDone;
 
     @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "varchar(10)")
     private ColorType colorType;
 
     private String detail;
 
     @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "varchar(20)")
     private DdayType ddayType;
 
     private LocalDate dday;

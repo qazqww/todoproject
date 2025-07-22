@@ -5,7 +5,7 @@ import TodoDetail from './TodoDetail';
 import TodoDropdown from './TodoDropdown';
 import { updateTodo } from '../../api/todoApi';
 
-const TodoItem = ({ todo, onEdit, onDelete }) => {
+const TodoItem = ({ todo, onEdit, onDelete, onExpand }) => {
   const [isClicked, setClicked] = useState(false);
   const [isChecked, setChecked] = useState(todo.done);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -96,7 +96,9 @@ const TodoItem = ({ todo, onEdit, onDelete }) => {
         </td>
       </tr>
       <tr>
-        <td colSpan='6'>{isClicked && <TodoDetail todo={todo} />}</td>
+        <td colSpan='6'>
+          {isClicked && <TodoDetail todo={todo} onExpand={onExpand} />}
+        </td>
       </tr>
     </>
   );

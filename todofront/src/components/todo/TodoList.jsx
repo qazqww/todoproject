@@ -6,6 +6,7 @@ const TodoList = ({
   todos,
   onEdit,
   onDelete,
+  onExpand,
   onSortPriority,
   onSortDday,
   onSortDone,
@@ -52,6 +53,7 @@ const TodoList = ({
                 todo={todo}
                 onEdit={onEdit}
                 onDelete={onDelete}
+                onExpand={onExpand}
               />
             );
           })}

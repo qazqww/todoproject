@@ -28,6 +28,12 @@ const TodoPage = () => {
     });
   };
 
+  const handleTodoExpand = (no) => {
+    todoApi.findTodoExpand(no).then((res) => {
+      setTodos(todos.map((e) => (e.no === no ? { ...e, ...res.data } : e)));
+    });
+  };
+
   const handleUpdate = (todo) => {
     todoApi.updateTodo(todo).then((res) => {
       setTodos(todos.map((e) => (e.no === todo.no ? { ...e, ...todo } : e)));
@@ -74,9 +80,11 @@ const TodoPage = () => {
   };
 
   useEffect(() => {
+    console.time('executionTime');
     todoApi.findAllTodo().then((res) => {
       setTodos(res.data);
     });
+    console.timeEnd('executionTime');
   }, []);
 
   return (
@@ -86,6 +94,7 @@ const TodoPage = () => {
         todos={todos}
         onEdit={handleEdit}
         onDelete={handleDelete}
+        onExpand={handleTodoExpand}
         onSortPriority={sortByPriority}
         onSortDday={sortByDday}
         onSortDone={sortByDone}
