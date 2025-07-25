@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import * as todoApi from '../api/todoApi';
 import TodoList from '../components/todo/TodoList';
 import AddTodoForm from '../components/todo/AddTodoForm';
@@ -10,6 +10,7 @@ const TodoPage = () => {
   const [isAddFormOpened, setAddFormOpened] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedTodo, setSelectedTodo] = useState(null);
+  const apiTimeRef = useRef(null);
 
   const handleAdd = async (todo) => {
     try {
@@ -80,12 +81,18 @@ const TodoPage = () => {
   };
 
   useEffect(() => {
-    console.time('executionTime');
+    apiTimeRef.current = performance.now();
     todoApi.findAllTodo().then((res) => {
       setTodos(res.data);
     });
-    console.timeEnd('executionTime');
   }, []);
+
+  useEffect(() => {
+    requestAnimationFrame(() => {
+      const endTime = performance.now();
+      console.log(`API 호출 시간: ${endTime - apiTimeRef.current}ms`);
+    });
+  });
 
   return (
     <div className='w-screen h-screen m-auto bg-gray-200 p-6 rounded shadow-lg'>
