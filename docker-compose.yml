@@ -1,0 +1,15 @@
+services:
+  backend:
+    build: ./todoback
+    ports:
+      - "8080:8080"
+  frontend:
+    build: ./todofront
+    ports:
+      - "5173:80"
+  h2:
+    image: oscarfonts/h2
+    ports:
+      - "1521:1521"
+      - "8081:81"
+    container_name: h2db
