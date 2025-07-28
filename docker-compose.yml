@@ -8,8 +8,13 @@ services:
     ports:
       - "5173:80"
   h2:
-    image: oscarfonts/h2
+    image: oscarfonts/h2:latest
+    container_name: h2-dev
+    restart: always
     ports:
       - "1521:1521"
       - "8081:81"
-    container_name: h2db
+    environment:
+      H2_OPTIONS: -ifNotExists
+    volumes:
+      - /Users/Shared/data/h2-dev:/opt/h2-data

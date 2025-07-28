@@ -8,6 +8,6 @@ spring:
     password: ${H2_PASSWORD}
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: create
     show-sql: false
     database-platform: org.hibernate.dialect.H2Dialect
