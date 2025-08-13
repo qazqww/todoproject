@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'http://raptariortodoproj.kro.kr:8080/',
+  baseURL: '/todo',
   headers: {
     'Content-Type': 'application/json',
   },
