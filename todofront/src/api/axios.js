@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'http://raptariortodoproj:8080/',
+  baseURL: 'http://raptariortodoproj.kro.kr:8080/',
   headers: {
     'Content-Type': 'application/json',
   },
