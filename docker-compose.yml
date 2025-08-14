@@ -8,7 +8,9 @@ services:
   frontend:
     build: ./todofront
     ports:
-      - '5173:80'
+      - '443:443'
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt:ro
   db:
     env_file: .env
     image: mysql:8.0
