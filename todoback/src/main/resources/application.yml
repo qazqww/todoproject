@@ -13,3 +13,7 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
+logging:
+  level:
+    com.raptarior.todoback: DEBUG
+    org.springframework.web: DEBUG
