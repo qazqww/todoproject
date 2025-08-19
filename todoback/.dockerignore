@@ -1,0 +1,13 @@
+.gradle
+build
+!gradle/wrapper/gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.properties
+!gradlew
+!gradlew.bat
+.git
+.gitignore
+README.md
+.DS_Store
+*.log
+.vscode
+.idea

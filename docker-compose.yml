@@ -1,24 +1,84 @@
+version: '3.8'
+
 services:
-  backend:
-    build: ./todoback
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    container_name: todo-mysql
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: tododb
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./mysql/init:/docker-entrypoint-initdb.d
+    networks:
+      - todo-network
+    command: --default-authentication-plugin=mysql_native_password
+
+  # Backend Spring Boot Application
+  todoback:
+    build:
+      context: ./todoback
+      dockerfile: Dockerfile
+    container_name: todo-backend
+    restart: unless-stopped
+    environment:
+      MYSQL_URL: ${MYSQL_URL}
+      MYSQL_USERNAME: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      SPRING_PROFILES_ACTIVE: docker
     ports:
       - '8080:8080'
     env_file:
       - .env
-  frontend:
-    build: ./todofront
-    ports:
-      - '443:443'
+    depends_on:
+      - mysql
+    networks:
+      - todo-network
     volumes:
-      - /etc/letsencrypt:/etc/letsencrypt:ro
-  db:
-    env_file: .env
-    image: mysql:8.0
-    container_name: mysql
+      - ./logs:/app/logs
+
+  # Frontend React Application
+  todofront:
+    build:
+      context: ./todofront
+      dockerfile: Dockerfile
+    container_name: todo-frontend
+    restart: unless-stopped
     ports:
-      - '3307:3306'
-    restart: always
+      - '80:80'
+    depends_on:
+      - todoback
+    networks:
+      - todo-network
+
+  # Nginx Reverse Proxy (optional, for production)
+  nginx:
+    image: nginx:alpine
+    container_name: todo-nginx
+    restart: unless-stopped
+    ports:
+      - '8000:80'
     volumes:
-      - ./db/mysql/data:/var/lib/mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      - ./todofront/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./todofront/dist:/usr/share/nginx/html
+    depends_on:
+      - todofront
+      - todoback
+    networks:
+      - todo-network
+
+volumes:
+  mysql_data:
+    driver: local
+
+networks:
+  todo-network:
+    driver: bridge

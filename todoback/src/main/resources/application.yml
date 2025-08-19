@@ -4,7 +4,7 @@ spring:
   datasource:
     url: ${MYSQL_URL}
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: ${MYSQL_USERNAME}
+    username: ${MYSQL_USER}
     password: ${MYSQL_PASSWORD}
   jpa:
     hibernate:
@@ -13,6 +13,9 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
+server:
+  servlet:
+    context-path: /api
 logging:
   level:
     com.raptarior.todoback: DEBUG
