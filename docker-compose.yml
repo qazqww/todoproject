@@ -1,4 +1,29 @@
 services:
+  backend:
+    image: ${BACK_IMAGE_NAME}:${BACK_IMAGE_TAG}
+    container_name: todo-backend
+    restart: unless-stopped
+    env_file:
+      - .env
+    depends_on:
+      - mysql
+    networks:
+      - todo-network
+    volumes:
+      - ./logs:/app/logs
+
+  frontend:
+    image: ${FRONT_IMAGE_NAME}:${FRONT_IMAGE_TAG}
+    container_name: todo-frontend
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+    networks:
+      - todo-network
+
   mysql:
     image: mysql:8.0
     container_name: todo-mysql
@@ -18,39 +43,6 @@ services:
     networks:
       - todo-network
     command: --default-authentication-plugin=mysql_native_password
-
-  todoback:
-    build:
-      context: ./todoback
-      dockerfile: Dockerfile
-    container_name: todo-backend
-    restart: unless-stopped
-    environment:
-      MYSQL_URL: ${MYSQL_URL}
-      MYSQL_USERNAME: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      SPRING_PROFILES_ACTIVE: docker
-    env_file:
-      - .env
-    depends_on:
-      - mysql
-    networks:
-      - todo-network
-    volumes:
-      - ./logs:/app/logs
-
-  nginx:
-    build:
-      context: ./todofront
-      dockerfile: Dockerfile
-    restart: unless-stopped
-    ports:
-      - '80:80'
-      - '443:443'
-    volumes:
-      - /etc/letsencrypt:/etc/letsencrypt:ro
-    networks:
-      - todo-network
 
 volumes:
   mysql_data:
