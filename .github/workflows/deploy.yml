@@ -55,10 +55,10 @@ jobs:
             git fetch --all
             git reset --hard origin/main
 
-            echo "BACK_IMAGE_NAME=qazqww/todoback
-            BACK_IMAGE_TAG='${GITHUB_SHA::8}'
+            echo 'BACK_IMAGE_NAME=qazqww/todoback
+            BACK_IMAGE_TAG="${GITHUB_SHA::8}"
             FRONT_IMAGE_NAME=qazqww/todofront
-            FRONT_IMAGE_TAG='${GITHUB_SHA::8}' > deploy.env
+            FRONT_IMAGE_TAG="${GITHUB_SHA::8}"' > deploy.env
 
             echo '${{ secrets.DOCKER_PASSWORD }}' | docker login -u '${{ secrets.DOCKER_USER }}' --password-stdin
             sudo docker compose pull

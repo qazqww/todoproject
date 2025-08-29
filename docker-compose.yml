@@ -5,6 +5,7 @@ services:
     restart: unless-stopped
     env_file:
       - .env
+      - deploy.env
     depends_on:
       - mysql
     networks:
@@ -16,6 +17,8 @@ services:
     image: ${FRONT_IMAGE_NAME}:${FRONT_IMAGE_TAG}
     container_name: todo-frontend
     restart: unless-stopped
+    env_file:
+      - deploy.env
     ports:
       - '80:80'
       - '443:443'
