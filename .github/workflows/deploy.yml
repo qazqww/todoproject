@@ -55,10 +55,12 @@ jobs:
             git fetch --all
             git reset --hard origin/main
 
-            printf 'B_IMAGE_NAME=qazqww/todoback\nB_IMAGE_TAG="${GITHUB_SHA::8}"\nF_IMAGE_NAME=qazqww/todofront\nF_IMAGE_TAG="${GITHUB_SHA::8}"' > deploy.env
+            export BACK_IMAGE_NAME=qazqww/todoback
+            export BACK_IMAGE_TAG='${GITHUB_SHA::8}'
+            export FRONT_IMAGE_NAME=qazqww/todofront
+            export FRONT_IMAGE_TAG='${GITHUB_SHA::8}'
 
             echo '${{ secrets.DOCKER_PASSWORD }}' | docker login -u '${{ secrets.DOCKER_USER }}' --password-stdin
-            source deploy.env
             sudo docker compose pull
             sudo docker compose up -d --remove-orphans
             docker image prune -f
