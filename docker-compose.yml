@@ -1,5 +1,5 @@
 services:
-  backend:
+  todoback:
     image: ${BACK_IMAGE_NAME}:${BACK_IMAGE_TAG}
     container_name: todo-backend
     restart: unless-stopped
@@ -12,7 +12,7 @@ services:
     volumes:
       - ./logs:/app/logs
 
-  frontend:
+  todofront:
     image: ${FRONT_IMAGE_NAME}:${FRONT_IMAGE_TAG}
     container_name: todo-frontend
     restart: unless-stopped
