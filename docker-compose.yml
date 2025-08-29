@@ -1,6 +1,6 @@
 services:
   todoback:
-    image: ${BACK_IMAGE_NAME}:${BACK_IMAGE_TAG}
+    image: ${B_IMAGE_NAME}:${B_IMAGE_TAG}
     container_name: todo-backend
     restart: unless-stopped
     env_file:
@@ -14,7 +14,7 @@ services:
       - ./logs:/app/logs
 
   todofront:
-    image: ${FRONT_IMAGE_NAME}:${FRONT_IMAGE_TAG}
+    image: ${F_IMAGE_NAME}:${F_IMAGE_TAG}
     container_name: todo-frontend
     restart: unless-stopped
     env_file:
