@@ -58,7 +58,7 @@ jobs:
             git reset --hard origin/main
 
             echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER" --password-stdin
-            BACK_IMAGE_TAG=$BACK_IMAGE_TAG BACK_IMAGE_NAME=$BACK_IMAGE_NAME docker-compose pull
-            FRONT_IMAGE_TAG=$FRONT_IMAGE_TAG FRONT_IMAGE_NAME=$FRONT_IMAGE_NAME docker-compose up -d --remove-orphans
+            BACK_IMAGE_TAG=$BACK_IMAGE_TAG BACK_IMAGE_NAME=$BACK_IMAGE_NAME docker compose pull
+            FRONT_IMAGE_TAG=$FRONT_IMAGE_TAG FRONT_IMAGE_NAME=$FRONT_IMAGE_NAME docker compose up -d --remove-orphans
             docker image prune -f
             "
