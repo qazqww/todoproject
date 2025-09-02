@@ -3,6 +3,8 @@ services:
     image: ${BACK_IMAGE_NAME}:${BACK_IMAGE_TAG}
     container_name: todo-backend
     restart: unless-stopped
+    env_file:
+      - .env
     depends_on:
       - mysql
     networks:
