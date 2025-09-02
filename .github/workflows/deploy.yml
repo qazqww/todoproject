@@ -53,8 +53,8 @@ jobs:
             git fetch --all
             git reset --hard origin/main
 
-            sed -i 's|^BACK_IMAGE_TAG=.*|BACK_IMAGE_TAG=${GITHUB_SHA::8}|' .env
-            sed -i 's|^FRONT_IMAGE_TAG=.*|FRONT_IMAGE_TAG=${GITHUB_SHA::8}|' .env
+            sed -i 's|^BACK_IMAGE_TAG=.*|BACK_IMAGE_TAG=${GITHUB_SHA::7}|' .env
+            sed -i 's|^FRONT_IMAGE_TAG=.*|FRONT_IMAGE_TAG=${GITHUB_SHA::7}|' .env
 
             echo '${{ secrets.DOCKER_PASSWORD }}' | sudo docker login -u '${{ secrets.DOCKER_USER }}' --password-stdin
             sudo docker compose pull
