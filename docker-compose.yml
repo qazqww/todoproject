@@ -1,10 +1,8 @@
 services:
   todoback:
-    image: qazqww/todoback
+    image: ${BACK_IMAGE_NAME}:${BACK_IMAGE_TAG}
     container_name: todo-backend
     restart: unless-stopped
-    env_file:
-      - .env
     depends_on:
       - mysql
     networks:
@@ -13,7 +11,7 @@ services:
       - ./logs:/app/logs
 
   todofront:
-    image: qazqww/todofront
+    image: ${FRONT_IMAGE_NAME}:${FRONT_IMAGE_TAG}
     container_name: todo-frontend
     restart: unless-stopped
     ports:
