@@ -2,17 +2,15 @@ FROM gradle:8.5-jdk17 AS build
 
 WORKDIR /app
 
-COPY build.gradle settings.gradle ./
-COPY gradle/ gradle/
 COPY gradlew gradlew.bat ./
-
-RUN gradle dependencies --no-daemon
+COPY gradle/ gradle/
+COPY build.gradle settings.gradle ./
+RUN ./gradlew dependencies --no-daemon
 
 COPY src/ src/
+RUN ./gradlew build --no-daemon -x test
 
-RUN gradle build --no-daemon -x test
-
-FROM openjdk:17
+FROM amazoncorretto:17-alpine
 
 WORKDIR /app
 
