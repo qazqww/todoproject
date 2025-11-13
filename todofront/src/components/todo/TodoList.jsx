@@ -1,4 +1,3 @@
-import React from 'react';
 import TodoItem from './TodoItem';
 import { TiArrowSortedDown } from 'react-icons/ti';
 
@@ -46,17 +45,18 @@ const TodoList = ({
           </tr>
         </thead>
         <tbody>
-          {todos.map((todo) => {
-            return (
-              <TodoItem
-                key={todo.no}
-                todo={todo}
-                onEdit={onEdit}
-                onDelete={onDelete}
-                onExpand={onExpand}
-              />
-            );
-          })}
+          {Array.isArray(todos) &&
+            todos.map((todo) => {
+              return (
+                <TodoItem
+                  key={todo.no}
+                  todo={todo}
+                  onEdit={onEdit}
+                  onDelete={onDelete}
+                  onExpand={onExpand}
+                />
+              );
+            })}
         </tbody>
       </table>
     </div>

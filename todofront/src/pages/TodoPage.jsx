@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import * as todoApi from '../api/todoApi';
 import TodoList from '../components/todo/TodoList';
 import AddTodoForm from '../components/todo/AddTodoForm';
@@ -87,15 +87,8 @@ const TodoPage = () => {
     });
   }, []);
 
-  useEffect(() => {
-    requestAnimationFrame(() => {
-      const endTime = performance.now();
-      console.log(`API 호출 시간: ${endTime - apiTimeRef.current}ms`);
-    });
-  });
-
   return (
-    <div className='w-screen h-screen m-auto bg-gray-200 p-6 rounded shadow-lg'>
+    <div className='w-screen h-full m-auto bg-gray-200 p-6 rounded shadow-lg'>
       <h1 className='text-2xl font-bold mb-6'>목록</h1>
       <TodoList
         todos={todos}

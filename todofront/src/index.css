@@ -90,7 +90,7 @@ button:focus-visible {
   width: 80px;
 }
 
-@media (prefers-color-scheme: light) {
+@media (prefers-color-scheme: light), (prefers-color-scheme: dark) {
   :root {
     color: #213547;
     background-color: #ffffff;
