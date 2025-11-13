@@ -1,4 +1,4 @@
-import { React, useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MdExpandMore, MdExpandLess } from 'react-icons/md';
 import dayjs from 'dayjs';
 import { DdayType } from '../../constants/DdayType';

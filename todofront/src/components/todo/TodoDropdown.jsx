@@ -1,5 +1,3 @@
-import { React, useEffect, useState } from 'react';
-
 const TodoDropdown = ({ todo, onEdit, onDelete, setMenuOpen }) => {
   return (
     <div className='absolute right-0 mt-2 w-32 bg-white border rounded shadow-lg z-10'>

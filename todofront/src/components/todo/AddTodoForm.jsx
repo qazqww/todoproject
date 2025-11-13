@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const AddTodoForm = ({ onAdd, isOpened }) => {
   const [content, setContent] = useState('');

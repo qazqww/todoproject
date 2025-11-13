@@ -1,18 +1,8 @@
 spring:
+  profiles:
+    active: test
   application:
     name: todoback
-  datasource:
-    url: jdbc:mysql://${MYSQLHOST}:${MYSQLPORT}/${MYSQL_DATABASE}?allowPublicKeyRetrieval=true&serverTimezone=UTC
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: ${MYSQLUSER}
-    password: ${MYSQLPASSWORD}
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: false
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQLDialect
 server:
   servlet:
     context-path: /api
