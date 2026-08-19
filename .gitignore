@@ -1,3 +1,5 @@
 .env
 db
 mysql/init/user-init.sql
+# 루트 임시 lockfile (실제 lockfile은 todofront/package-lock.json)
+/package-lock.json
