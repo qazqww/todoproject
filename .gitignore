@@ -3,3 +3,9 @@ db
 mysql/init/user-init.sql
 # 루트 임시 lockfile (실제 lockfile은 todofront/package-lock.json)
 /package-lock.json
+
+# macOS
+.DS_Store
+
+# 발표/작업용 로컬 자료
+common/
